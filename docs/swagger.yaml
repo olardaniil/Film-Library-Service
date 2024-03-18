@@ -1,0 +1,571 @@
+basePath: /
+definitions:
+  entity.ActorsInputBody:
+    properties:
+      date_birth:
+        type: string
+      first_name:
+        type: string
+      gender_id:
+        type: integer
+      last_name:
+        type: string
+      middle_name:
+        type: string
+    type: object
+  entity.MoviesInputBody:
+    properties:
+      actor_ids:
+        items:
+          type: integer
+        type: array
+      description:
+        type: string
+      rating:
+        type: number
+      release_date:
+        type: string
+      title:
+        type: string
+    type: object
+  handler.LoginInputBody:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  handler.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  handler.errorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API Server for FilmLibraryService
+  title: FilmLibraryService
+  version: "1.0"
+paths:
+  /actors/:
+    get:
+      consumes:
+      - application/json
+      description: Получить список всех актёров
+      operationId: get-actors
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - JWT: []
+      summary: Получить список всех актёров
+      tags:
+      - actors
+    post:
+      consumes:
+      - application/json
+      description: Добавить нового актёра
+      operationId: post-actors
+      parameters:
+      - description: actor info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/entity.ActorsInputBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - JWT: []
+      summary: Добавить нового актёра
+      tags:
+      - actors
+  /actors/{actor_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удалить актёра
+      operationId: delete-actors
+      parameters:
+      - description: actor_id
+        in: path
+        name: actor_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - JWT: []
+      summary: Удалить актёра
+      tags:
+      - actors
+    patch:
+      consumes:
+      - application/json
+      description: Обновить информацию об актёре
+      operationId: put-actors
+      parameters:
+      - description: actor_id
+        in: path
+        name: actor_id
+        required: true
+        type: integer
+      - description: Фамилия
+        in: query
+        name: lname
+        type: string
+      - description: Имя
+        in: query
+        name: fname
+        type: string
+      - description: Отчество
+        in: query
+        name: mname
+        type: string
+      - description: ID Гендера
+        in: query
+        name: gid
+        type: integer
+      - description: День рождение | Пример > 2000-01-01
+        in: query
+        name: dbirth
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - JWT: []
+      summary: Обновить информацию об актёре
+      tags:
+      - actors
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Авторизация
+      operationId: post-login
+      parameters:
+      - description: 'Тестовые данные: {user:user} без прав администратора и {admin:admin}
+          с правами администратора'
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.LoginInputBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Авторизация
+      tags:
+      - auth
+  /movies/:
+    get:
+      consumes:
+      - application/json
+      description: Получить список всех актёров
+      operationId: get-movies
+      parameters:
+      - description: 'Сортировка | Возможные значения: title-asc, title-desc, release-date-asc,
+          release-date-desc, rating-asc, rating-desc'
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - JWT: []
+      summary: Получить список всех фильмов
+      tags:
+      - movies
+    post:
+      consumes:
+      - application/json
+      description: Добавить новый фильм
+      operationId: post-movies
+      parameters:
+      - description: movies body
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/entity.MoviesInputBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - JWT: []
+      summary: Добавить новый фильм
+      tags:
+      - movies
+  /movies/{movie_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удалить фильм
+      operationId: delete-movies
+      parameters:
+      - description: movie_id
+        in: path
+        name: movie_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - JWT: []
+      summary: Удалить фильм
+      tags:
+      - movies
+    patch:
+      consumes:
+      - application/json
+      description: Обновить информацию о фильме
+      operationId: put-movies
+      parameters:
+      - description: movie_id
+        in: path
+        name: movie_id
+        required: true
+        type: integer
+      - description: Название
+        in: query
+        name: title
+        type: string
+      - description: Описание
+        in: query
+        name: description
+        type: string
+      - description: Дата выхода | Пример > 2000-01-01
+        in: query
+        name: rdate
+        type: string
+      - description: Рейтинг
+        in: query
+        name: rating
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - JWT: []
+      summary: Обновить информацию о фильме
+      tags:
+      - movies
+  /search-movies/:
+    get:
+      consumes:
+      - application/json
+      description: Поиск фильмов по фрагменту названия фильма или имени актёра
+      operationId: get-search-movies
+      parameters:
+      - description: Запрос на поиск
+        in: query
+        name: q
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - JWT: []
+      summary: Поиск фильмов по фрагменту названия фильма или имени актёра
+      tags:
+      - movies
+securityDefinitions:
+  JWT:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

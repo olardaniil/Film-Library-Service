@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  film-library-service:
+    build: ./
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db_postgres
+    environment:
+      - APP_PORT=8080
+      - DB_HOST=composepostgres
+      - DB_PORT=5432
+      - DB_USER=root
+      - DB_PASS=root
+      - DB_NAME=film_library_db
+      - DB_SSL_MODE=disable
+
+  db_postgres:
+    image: postgres
+    container_name: composepostgres
+    restart: always
+
+    shm_size: 256mb
+
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: film_library_db
+
+    ports:
+      - "5432:5432"
