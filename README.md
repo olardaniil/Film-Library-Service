@@ -41,7 +41,7 @@
 * docker-compose для запуска окружения с работающим приложением и СУБД.
 
 ## Локальный запуск проекта
-> [!TIP]
+> [!NOTE]
 > 1. Запуск проекта на локальном сервере производиться командой `docker-compose up -d`
 > 2. Для миграции используйте команду `migrate -path ./schema -database 'postgresql://root:root@localhost:5432/film_library_db?sslmode=disable' up`
 > 3. Swagger на локальном сервере доступен по `url: http://127.0.0.1:8080/swagger/index.html`
