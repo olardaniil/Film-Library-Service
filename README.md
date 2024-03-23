@@ -2,7 +2,7 @@
 >Профильное задание на позицию "Go-разработчик" для стажировки VK.
 Реализация бэкенд приложения "Фильмотека", который предоставляет REST API для управления базой данных фильмов.
 
-Ссылка на Swagger 2.0 [здесь](https://t-app.ru/swagger/index.html).
+Ссылка на Swagger 2.0 [здесь](http://t-app.ru/s7/swagger/index.html#/).
 
 ## Используемые технологии
 ![Go](https://img.shields.io/badge/go-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white)
